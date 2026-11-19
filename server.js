@@ -5,7 +5,20 @@ const connectDB = require('./config/db');
 const travelRoutes = require('./routes/travelRoutes');
 
 const app = express();
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }));
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://travelia-admin-frontent-qpbm.vercel.app'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 app.use(express.json({ limit: '1mb' }));
 app.use('/api/travels', travelRoutes);
 app.get('/', (req, res) => res.json({ success: true, message: 'Travel Admin API is running.' }));
