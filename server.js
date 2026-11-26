@@ -13,6 +13,7 @@ const Booking = require("./models/Booking");
 const travelRoutes = require("./routes/travelRoutes");
 const touristPlaceRoutes = require("./routes/touristPlaceRoutes");
 
+const paymentRoutes = require("./routes/paymentRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const authRoutes = require("./routes/authRoutes");
 
@@ -191,8 +192,8 @@ app.use(express.json({ limit: "1mb" }));
 app.use("/api/travels", travelRoutes);
 
 app.use("/api/tourist-places", touristPlaceRoutes);
-
-
+app.use("/api/payments", paymentRoutes);
+app.use("/api/pay", bookingRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/auth", authRoutes);
 
